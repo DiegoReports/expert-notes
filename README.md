@@ -1,5 +1,6 @@
 <div align=center>
-  ![GitHub repo size](https://img.shields.io/github/repo-size/diegoreports/expert-notes)
+
+![Github repo size](https://img.shields.io/github/repo-size/diegoreports/expert-notes)
 
 ![GitHub stars](https://img.shields.io/github/stars/diegoreports/expert-notes)
 ![GitHub forks](https://img.shields.io/github/forks/diegoreports/expert-notes?style=social)
