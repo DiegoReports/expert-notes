@@ -28,6 +28,11 @@ export function NewNoteCard({ onNoteCreated }: NewNoteCardProps) {
   function handleSaveNote(event: FormEvent) {
     event.preventDefault()
 
+    // prevenindo para nao criar nota sem conteudo
+    if (content === '') {
+      return
+    }
+
     // criando nota
     onNoteCreated(content)
 
@@ -39,6 +44,22 @@ export function NewNoteCard({ onNoteCreated }: NewNoteCardProps) {
 
   function handleStartRecording() {
     setIsRecording(true)
+
+    const isSpeechRecognitionAPIAvailable =
+      'SpeechRecognition' in window || 'webkitSpeechRecognition' in window
+
+    if (!isSpeechRecognitionAPIAvailable) {
+      alert('Infelizmente seu navegador não suporta a API de gravação!')
+      return
+    }
+
+    const SpeechRecognitionAPI =
+      window.SpeechRecognition || window.webkitSpeechRecognition
+
+    const speechRecognition = new SpeechRecognitionAPI()
+
+    speechRecognition.lang = 'pt-BR'
+    speechRecognition.continuous = true // Não pare de gravar até que seja solicitado via voz
   }
 
   function handleStopRecording() {
@@ -104,7 +125,8 @@ export function NewNoteCard({ onNoteCreated }: NewNoteCardProps) {
                 onClick={handleStopRecording}
                 className="w-full bg-slate-900 py-4 text-center text-sm text-slate-300 font-medium hover:text-slate-100"
               >
-                🔴 Gravando! (clique p/ interromper)
+                <span className="animate-pulse">🔴</span> Gravando! (clique p/
+                interromper)
               </button>
             ) : (
               <button
