@@ -1,9 +1,10 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { X } from 'lucide-react'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 
 export function NewNoteCard() {
   const [shouldShowOnBoarding, setShouldShowOnBoarding] = useState(true)
+  const [content, setContent] = useState('')
 
   function handleStartEditor() {
     setShouldShowOnBoarding(false)
@@ -11,12 +12,17 @@ export function NewNoteCard() {
 
   // retorna para opções de audio ou digitação quando todo conteudo da texarea é apagado
   function handleContentChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    setContent(event.target.value)
+
     if (event.target.value === '') {
       setShouldShowOnBoarding(true)
     }
   }
 
-  function handleSaveNote() {}
+  function handleSaveNote(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    console.log(content)
+  }
 
   return (
     <Dialog.Root>
@@ -66,7 +72,7 @@ export function NewNoteCard() {
             </div>
 
             <button
-              type="button"
+              type="submit"
               className="w-full bg-lime-400 py-4 text-center text-sm text-lime-950 font-medium hover:bg-lime-500"
             >
               Salvar nota
